@@ -115,3 +115,95 @@ flex: 1 100%; // 每个元素占1份，每个宽度100%
 
 ## 优化资源加载顺序
 
+查看控制台-performance priority选项-查看资源优先级，浏览器默认安排（根据已有的固定经验，比如index.html最高）
+
+- 优先级调整
+
+1.preload 需要指定类型
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .wrapper img {
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+    <!-- 提升加载优先级： 提前加载较晚出现但是对当前页面非常重要的资源 -->
+    <link rel="preload" href="./img/logo2.jpg" as="image">
+</head>
+<body>
+    <div id="wrapper">
+        <a href="./product1.html">
+            <img src="./img/logo1.jpg" alt="111" srcset="">
+        </a>
+        <a href="./product2.html">
+            <img src="./img/logo2.jpg" alt="222" srcset="">
+        </a>
+    </div>
+    <script src="./index.js"></script>
+</body>
+</html>
+```
+加载顺序由1-2变成2-1
+
+
+如何加载字体：
+在css文件中
+```css
+@import url(https://fonts.googleapis.com/css?family=Long+Cang); // 引入字体
+
+.text {
+    font-family: 'Long Cang'; // 使用字体
+    font-weight: 400;
+    font-size: 40px;
+    font-style: normal;
+    text-align: center;
+}
+```
+在html中
+
+```
+ <div class="text">你好世界</div>
+```
+
+
+现在想把字体提前加载
+```
+<link as="font" type="font/woff2" rel="preload" href="https://fonts.gstatic.com/**字体路径">
+```
+
+
+2.prefetch 提前加载后面的页面需要的资源（仅在当前页面有空闲的时候，不会修改已有资源优先级）
+
+## 图片延迟加载
+
+```
+
+function loadResource (url) { // 预加载函数
+    let link = document.createElement('li');
+
+    link.rel = 'preload';
+    link.href = url;
+    link.as = 'image'
+
+    document.head.appendChild(link)
+}
+
+function execResource(url) { // 图片赋值
+    let image = document.getElementById('xxxx');
+    image.src = url
+}
+
+```
+
+webpack里面使用
+
+```
+import(/* webpackPrefetch: true */ 'LoginModal'); // 加上注释
+```

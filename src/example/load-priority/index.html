@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .wrapper img {
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+    <!-- 提升加载优先级： 提前加载较晚出现但是对当前页面非常重要的资源 -->
+    <link rel="preload" href="./img/logo2.jpg" as="image">
+</head>
+<body>
+    <div id="wrapper">
+        <a href="./product1.html">
+            <img src="./img/logo1.jpg" alt="111" srcset="">
+        </a>
+        <a href="./product2.html">
+            <img src="./img/logo2.jpg" alt="222" srcset="">
+        </a>
+    </div>
+    <script src="./index.js"></script>
+</body>
+</html>

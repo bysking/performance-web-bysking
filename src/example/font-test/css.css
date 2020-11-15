@@ -1,0 +1,9 @@
+@import url(https://fonts.googleapis.com/css?family=Long+Cang);
+
+.text {
+    font-family: 'Long Cang';
+    font-weight: 400;
+    font-size: 40px;
+    font-style: normal;
+    text-align: center;
+}
